@@ -41,41 +41,15 @@ Public Sub getTimeSeries(dataflow As String)
     startTime = """"""  ' blank
     endTime = """"""    ' blank
 
-    'provider = ws.Cells(1, 1).Value
     provider = "SPC"
-    'query = ws.Cells(1, 2).Value
     query = dataflow
-    'startTime = ws.Cells(1, 3).Value
+    ' time period is not yet supported, but would be a pretty straightforward addition
     'startTime = "2000"
-    'endTime = ws.Cells(1, 4).Value
     'endTime = "2005"
-'    If provider = "" Then
-'        MsgBox "Error: provider has not been set in cell A1. Please set it."
-'        Exit Sub
-'    End If
-'    If query = "" Then
-'        MsgBox "Error: query has not been set in cell B1. Please set it."
-'        Exit Sub
-'    End If
-'
-'    ws.Cells(1, 1).Font.Bold = True
-'    ws.Cells(1, 2).Font.Bold = True
-'    ws.Cells(1, 3).Font.Bold = True
-'    ws.Cells(1, 4).Font.Bold = True
-'    ws.Cells(1, 1).Font.Color = vbRed
-'    ws.Cells(1, 2).Font.Color = vbRed
-'    ws.Cells(1, 3).Font.Color = vbRed
-'    ws.Cells(1, 4).Font.Color = vbRed
-
-
 
 '## build the command
     Dim command As String
-    'command = "cmd /c " & SDMX_JAVA & " " & SDMX_LIB & " it.bancaditalia.oss.sdmx.util.GetTimeSeries " _
-    '            & " " & provider & " " & query & " " _
-    '            & """" & startTime & """" & " " & """" & endTime & """" & " " & user & " " & pw
-        'TARGET cmd: curl -i -H "Accept: application/vnd.sdmx.data+csv" "https://stats.pacificdata.org/data-nsi/Rest/data/DF_POP_SUM/?startPeriod=2000&endPeriod=2005&format=csv"
-    'command = "curl -H ""Accept: application/vnd.sdmx.data+csv"" GET ""https://stats.pacificdata.org/data-nsi/Rest/data/" & query & "/?startPeriod=" & startTime & "&endPeriod=" & endTime & "&format=csv"""
+    'Example cmd: curl -i -H "Accept: application/vnd.sdmx.data+csv" "https://stats.pacificdata.org/data-nsi/Rest/data/DF_POP_SUM/?startPeriod=2000&endPeriod=2005&format=csv"
     command = "curl -H ""Accept: application/vnd.sdmx.data+csv"" GET ""https://stats.pacificdata.org/data-nsi/Rest/data/" & query & "/?format=csv"""
 '## execute the command
     Dim wsh As Object

@@ -16,17 +16,17 @@ Sub testRibbon_onLoad(ByVal ribbon As Office.IRibbonUI)
 'When the workbook is opened it sets the testRibbon variable
 Dim url As String
 url = "https://stats.pacificdata.org/data-nsi/Rest/dataflow/SPC/all?detail=allstubs"
-    
+
+'Connect to API
 Dim hReq As New MSXML2.XMLHTTP60
 hReq.Open "GET", url, False
-' hReq.send
-
 hReq.send CreateObject("ADODB.Stream")
 
 Dim resp As String
-' Get XML
+' Get XML from API
 resp = hReq.responseText
 
+'Set namespace for XML
 Dim objXML As New MSXML2.DOMDocument60
 'MsgBox TypeName(resp)
 If objXML.LoadXML(resp) Then
@@ -36,13 +36,13 @@ Else
     MsgBox "Error"
 End If
 
+' Use this to find dataflows in XML
 Dim xPath As String
 xPath = "message:Structure/message:Structures/structure:Dataflows/structure:Dataflow"
-'xPath = "Structure/Header/ID"
 
+' nodeList contains all instances of xPath (dataflows)
 Dim nodeList As IXMLDOMNodeList
 Dim node As IXMLDOMNode
-
 Set nodeList = objXML.SelectNodes(xPath)
 
 ' Get length of nodelist
@@ -63,6 +63,7 @@ Dim dfId As String
 Dim dfName As String
 Dim dict As Collection
 Set dict = New Collection
+' Assign each dataflow id and name to arrays
 For Each node In nodeList
     dfIds(X) = node.Attributes.getNamedItem("id").Text
     dfNames(X) = node.SelectSingleNode("common:Name").Text
@@ -120,7 +121,7 @@ Public Sub DropDown_getSelectedItemID(control As IRibbonControl, ByRef id)
 'This Callback will change the drop-down to be set to a specific the id.
 'This could be used to set a default value or reset the first item in the list
 
-'This example will set the selected item to the id with "ID Sheet: 4"
+'This example will set the selected item to the id "0"
 id = "0"
 
 End Sub
@@ -141,4 +142,3 @@ Sub updateRibbon()
 testRibbon.Invalidate
 
 End Sub
-
