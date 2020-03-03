@@ -1,3 +1,5 @@
+Forked from my internship Github account, to my personal Github account
+
 # excelsdmx
 
 Excel add-in for accessing PDH.STAT SDMX API.
